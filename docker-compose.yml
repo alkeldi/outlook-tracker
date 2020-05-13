@@ -1,0 +1,19 @@
+version: '3'
+services:
+    tracker:
+        container_name: tracker
+        image: golang:alpine
+        network_mode: bridge
+        volumes:
+            - ./app:/app        
+        working_dir: /app
+        command:
+            - "/bin/sh"
+            - "-c"
+            - |
+                apk add gcc
+                apk add libc-dev
+                go mod tidy
+                go build .
+                echo "starting server ..."
+                ./tracker
